@@ -62,6 +62,8 @@ body {
    background-color: white;
    bottom: 0;
    right: 50px; /* Place it towards the end of the level */
+   background-color: lightblue;
+   background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGMAAABjCAMAAAC45U6nAAAAAXNSR0IB2cksfwAAAAlwSFlzAAALEwAACxMBAJqcGAAAAjFQTFRFADIAqtIPcZ0KOaMFXrMIns0OJn4DAIwAl8oOAG4AcbsKJpwDDJEBUq4Ha7gKIJkDDZEBWLAIZbYJGZYCP6YGMqEES40HE5QCe78Loc4OL58EhMIMl8oNX7MIS6sHBo8BLJ4EZbUJa7gJkcgNRakGeL0LCI8BO6QFTawHWrEIX7MJXbIIVK8HVq8IiMQMCpABSqoHUK0HgMELA40AFpUCHJgDKZ0EdbwLjsYNgcEMT60HW7EInc0OEJIBbrkKNaIFAo0ADpICIZoDer4LicQMTqwHXLIIos4OEZMBdrwLMKAEZ7YJDpIBcrsKQKYGOKMFWbEIUa0HdLsKockONp0FAIcAj8INEo8CdLcKmMUOLZkEEo4CfboLJJYDWasIR6UGa5cJL14EEFEBAEsAKlwEBU0AIlkDLV0EDVABJVoDCk8BGlYCFVQCH1ADADIAADIAADIAADIAADIAADIAADIAADIAAAAAADIAADIAADIABjgBCTsBBjoBADcABDkACDsBAzgAATcABzoBBTkAAjgABDYAUn8He6YLUpUHAHMANooFbaAKIoEDB3YBWZgIdKMKRI8GG34CX5oJDnkBNmYFCZABJpsDS3kHJJoDfb8LkMcNK54EGpcCf8ALptAPFZQCEZMCVrAIHpgCZ7cJhMMMeb4LMaAEb7oKmcsOCJABHpgDNaEFmcsNIpoDdrwKHZgDNKIFBI4AD5IBJJsDgMALFZUCGZcCWLEIRagGd70LkccNDETeMQAAALt0Uk5T///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////x9v36R4XgwgBV1ar//////////////////////////////////////////////////////////////////////////////////////zOkNj8AAALzSURBVHic7dhPSBRRHAfw329mfPsnV3cta6Mi6iQYdslIMMRDdIhOElHUIaJDEEZRQRpRSRkhlQSLUVAZdejQ3jx4CQShIDEUAqH0sItgtgbqzu6s+6e3M7uRs64M4m/Ax7zDMPN2eJ+Z33xndt4g0DcUyKB0MCuWIZu6M+YdleyaDTllGK7l3emSEV25NRtSwj7DW+zAdFmjQq+ggsnVBvSg5sZFj6LCpnnwqfmuyl+may4pZQ0/zvCVIMZWM/zK9I4/aT+Lwq4Z2BrVD9ucq41gBDES8M0EZ1Wo0mD7JIlROBWpeBIb1eC5CkpTgYwGsgp7f5AYouTKjlqBILnajQkv8jYP1RlQxkkMUXJVhylkMW9FBqR52DJKYoAgudqHRlsCxnM1TGKIkquD+VypmM/VEkwskBggSK6a8Hs9DjfjGOwfgpZBEkOUXLXip2Y2Uq8MweExODBAYoCTK8vGkcm5RvzaiJ+h6QscCpMYq+SqrbgP6lquZNYk50DiD2wApi/LNoYJ2ZVkchwqVfDE812+14Zxbr0MSUnKTJMYn0clwG3Mo57Z9J2hXV/iU4rBrxizcLxqGD0UxvWCccMwHlIYN81GR/HSGFfe9LVBwYyCWn7NnVp5QFdWUyq0wk68eTtLjQfWDPe/QUzNjXGFJb25eGHbd6nUkIqR9ei/bIssP8qa2OMu/TYM/FzZeHJfvwGV6cJ26OL6G7145y6mXHir4eR5KqOvV3/ZRdwTGacy4P/n1QY2nnfrkygW6+odpTLsyJUdhpMr60awVp9DMXV2boHKECVXL3ih7l32Y+ZRxykqAwTJVT/+5oXi5apNn6YynFxZN8DJlWXj7ZtvddFoy9lrm2+foDLsyNV7bK/ZORIKTfS8GqQy+tkZXiherncJsusBNuTqA17gheLletk3QGU4ubJutE7x993FKhar7j5OZYAgz8SPnbGq/PvuYgPd+64o/7VOrqwbTq6sG2FsC4aOBbLJMB6lMkCQXJU3/gK1yZF47sEbawAAAABJRU5ErkJggg==);
 }
 
 </style>
@@ -87,7 +89,7 @@ body {
 <div class="enemy" style="left: 1200px; bottom: -10px"></div>
 
 <!-- The ending box -->
-<div style="font-family: monospace;" id="end" class="end"><center><br><br>End of<br> level 1</center></div>
+<div id="end" class="end"></div>
 
 <div id="controls">
    <div class="slider">
@@ -212,7 +214,7 @@ const endRect = end.getBoundingClientRect();
               characterRect.bottom > endRect.top &&
               characterRect.top < endRect.bottom
           ) {
-              location.href = "file:///home/chronos/u-111c8205412e4fefac6cedc03e726b1e9c617e8a/MyFiles/Downloads/My%20game.html/lvl2_dev.html";
+              location.href = "https://willthewised.github.io/MarioGame/lvl2_dev";
           }
 
           requestAnimationFrame(updateGame);
