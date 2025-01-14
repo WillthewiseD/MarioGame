@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Level 2</title>
+<style>
+body {
+   background-color: lightblue;
+   margin: 0;
+   overflow: hidden; /* Prevent scrolling when the character moves */
+}
+
+#character {
+   position: absolute;
+   width: 50px;
+   height: 50px;
+   background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACMAAAAvCAYAAABpG3MiAAAAAXNSR0IArs4c6QAAAVZJREFUWEftmL0NwjAQhXEq5qBkDmZADICgpGQGSkoQAyBmYA5K5qBKkCEnxYcvz8ZEccSlPTt5/vLuRzYj8NwKU6E1bfFpWZnQ/XChipFQZkEmVUSoT+w68pXomazEbFZhWbSbuefZXt3k4/HxvBQBiIEsxJAIOhE6KfdG7Hq7n2h9kFExtY+GTYZ7hGdLioeiyagYKbV7IUMfRZ5AHgnpUfvje+aB88zjUiQNV5IYX1tQMc0W0CQX3SjXJxf8YdnuCvJDiHdUjEQpbzJoqEKeQXEfFbHOqBipAvdKBn2c/2PuCVQ/UB1yil5WYqRGSFM+JzE5u9XgvnD7KIoTKd80YAYhhv4lPznyCIpzco5n0LyiYiS8WZD5tQh+WJ93xGxSMVI29UIm9WKR3/OGXr/57oeT7/Q6FYMaZ8y0b6mj99k1X096/yUmBCUZvQsy9O6XgXMR8wSFij99GUy9sgAAAABJRU5ErkJggg==);
+   background-repeat: no-repeat;
+   left: 0;
+   bottom: 0;
+}
+
+.block {
+    position: absolute;
+    width: 100px;
+    height: 20px;
+     background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACcAAAAoCAYAAAB99ePgAAAAAXNSR0IArs4c6QAAALNJREFUWEftmMENgCAMRWUGrxxZySUcyCVcyaNXZsBIogeCGL5B2uRz1abf11+bYrx1YRB6jBpx475Fht66LizT/De580GYpyjKLOvvAnP5dYg7iYktaxeTvSTV063S6JEcWhE95MT+SjghCuYrji9OiMq21dOtlR/W/HWSQxGTHMmhBNA4eo7kUAJoHD1HcigBNI6e+0yu91qY22FiWXuvhZew9PJSvjgJa+FjWVHDto47AFNUwwnsZOOOAAAAAElFTkSuQmCC);
+   
+    cursor: pointer;
+    bottom: 0; /* Set blocks at the bottom */
+}
+
+.enemy {
+   position: absolute;
+   width: 50px;
+   height: 50px;
+   background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACcAAAAmCAYAAABH/4KQAAAAAXNSR0IArs4c6QAAAVpJREFUWEftlzEOwjAMRZudtQcoZ0DMIHEAFi6AxMKBWJC4AAsHQIIZcQZ6gK7sRakwSoMb22nUltKutd2f9+0kVVGN5zId5VT6/PZUVEzVe+9EXbBz4jiCqkhIKYrJdVJcHVE2SS5BNrlBnIWYJBeSGDYoLot/T5xJa53FpQUf4sx3T43sWroQ1MMIouQGcW/+bHKu5p/tTkW58WrzsZVjsWnl47gvcq/bpbM1wOKSrb0SJ52MRsn9tzjuCYANhMsmaTzmguqVOGyF2NYA5LjxQchxP9aoOOlkhohn91yIj0lrdFucuRrO5Lp6iSJDnamQLz5bIbE1ca6V5/cz+XdPkYP3arIgb+A6lhWkAwdx0r8viA9JzrywQv00Tb9cbMXWYOKSJCkNAtxEuM2PCaFygSJJbhBnofQmZ9ZxWexjpz0cYls7JQ7E2L1XJRJ2f1c8NhC1tpI2xL0AxXkHNjdAkFwAAAAASUVORK5CYII=);
+   background-repeat: no-repeat;
+   bottom: 20px;
+   left: 300px;
+}
+.spike {
+   position: absolute;
+   width: 50px;
+   height: 50px;
+   background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAC0AAAAoCAYAAABq13MpAAAAAXNSR0IArs4c6QAAATxJREFUWEftWUEOgyAQxDd49egj+gfPfUOTXvqWXpr0DT37hz7Co1ffQLOkWEIMjIHCxiwHo2Fhh3EZd7FRv6aXrnceed2280SAmvWilNLjOKrT5cYLqYPm/byrYRgMZkJuAFNzQX9Xpmqx7/sn0NQIuKHbZ5oG6OvZdDSPV3HgW/59pu1LWGOaI+itmDbAl67XdgXcwqOdJxsVa3iYEKkVv8juP656IKsvaRNVj5JgUF9R9UAnKmkHqUdJQIgvSD0YSl449+D4cYnmHlxBB3MP6uQWHqIeyM7PYQOpRw5HOeeQ3CMnm6G5JPcoxfRxc49SDKJ+RD1QplLtRD1SGUTHi3qgTKXaiXqkMoiOF/VAmUq1i6pH7fpwq0YNVi61K3EL2D/UD6oHV9DQuQetuOZ59e5/Lqmb5h/jXaY/YYpLMZwKBOwAAAAASUVORK5CYII=);
+   background-repeat: no-repeat;
+   bottom: 20px;
+   left: 300px;
+}
+#controls {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+}
+
+#end {
+   position: absolute;
+   width: 100px;
+   height: 100px;
+   background-color: white;
+   bottom: -1;
+   right: 50px; /* Place it towards the end of the level */
+}
+
+</style>
+</head>
+<body>
+
+<div id="character"></div>
+
+<div id="blockContainer">
+   <!-- Example blocks -->
+
+
+   <div class="block" style="left: 400px; bottom: 100px;"></div>
+
+   <div class="block" style="left: 700px; bottom: 250px;"></div>
+   <div class="block" style="left: 800px; bottom: 350px;"></div>
+   <div class="block" style="left: 700px; bottom: 450px;"></div>
+   <div class="block" style="left: 1000px; bottom: 350px;"></div>
+   <div class="block" style="left: 1000px; bottom: 350px;"></div>
+   <div class="block" style="left: 1200px; bottom: 450px;"></div>
+   <div class="spike block" style="left:1258px; bottom:460px;"></div>
+   <div class="block" style="left: 1600px; bottom: 650px;"></div>
+   <div class="block" style="left: 1750px; bottom: 700px;"></div>
+</div>
+<div class="spike block" style="bottom:-10px;"></div>
+<div class="spike block" style="left:900px; bottom:-10px;"></div>
+<div class="spike block" style="left:900px; bottom: 10px;"></div>
+<div class="spike block" style="left:900px; bottom: 50px;"></div>
+<div class="spike block" style="left:900px; bottom: 60px;"></div>
+<div class="spike block" style="left:900px; bottom: 100px;"></div>
+<div class="spike block" style="left:900px; bottom: 120px;"></div>
+<div class="spike block" style="left:900px; bottom: 150px;"></div>
+<div class="spike block" style="left:900px; bottom: 170px;"></div>
+<div class="spike block" style="left:900px; bottom: 200px;"></div>
+<div class="spike block" style="left:900px; bottom: 220px;"></div>
+<div class="spike block" style="left:900px; bottom: 250px;"></div>
+<div class="spike block" style="left:900px; bottom: 270px;"></div>
+<div class="spike block" style="left:900px; bottom: 300px;"></div>
+<div class="spike block" style="left:900px; bottom: 320px;"></div>
+<div class="spike block" style="left:900px; bottom: 350px;"></div>
+<div class="spike block" style="left:900px; bottom: 370px;"></div>
+<div class="spike block" style="left:900px; bottom: 400px;"></div>
+<div class="enemy" style="left:1500px; bottom: 560px;"></div>
+<div class="enemy" style="left: 500px; bottom:-10px;"></div>
+<div class="enemy" style="left: 1400px; bottom:500px;"></div>
+<div class="enemy" style="left: 460px; bottom:-10px;"></div>
+<div class="enemy" style="left: 420px; bottom:-10px;"></div>
+<div class="enemy" style="left: 380px; bottom:-10px;"></div>
+<div class="enemy" style="left: 540px; bottom:-10px;"></div>
+<div class="enemy" style="left: 580px; bottom:-10px;"></div>
+<div class="enemy" style="left: 600px; bottom: 150px;"></div>
+<div class="enemy" style="left: 620px; bottom: -10px;"></div>
+<div class="enemy" style="left: 660px; bottom: -10px;"></div>
+<div class="enemy" style="left: 700px; bottom: -10px;"></div>
+<div class="enemy" style="left: 740px; bottom: -10px;"></div>
+<div class="enemy" style="left: 780px; bottom: -10px;"></div>
+<div class="enemy" style="left: 820px; bottom: -10px;"></div>
+<div class="enemy" style="left: 860px; bottom: -10px;"></div>
+<div style="font-family: monospace;" id="end" class="end"><center><br><br>End of<br> level 2</center></div>
+
+<div id="controls">
+   <div class="slider">
+    <h1 style="font-family: sans-serif;">OPTIONAL GOAL: Finish the level first try!</h1>
+       <label for="gravitySlider">Gravity: <span id="gravityLabel">0.50</span></label>
+       <input id="gravitySlider" type="range" min="-1" max="1" step="0.01" value="0.50">
+   </div>
+   <div class="slider">
+       <label for="jumpSlider">Jump Height: <span id="jumpLabel">10</span></label>
+       <input id="jumpSlider" type="range" min="5" max="28" step="1" value="10">
+   </div>
+   <div class="slider">
+       <label for="speedSlider">Speed: <span id="speedLabel">5</span></label>
+       <input id="speedSlider" type="range" min="2" max="30" step="1" value="5">
+   </div>
+ </div>
+  <script>
+   const character = document.getElementById("character");
+   const gravitySlider = document.getElementById("gravitySlider");
+   const gravityLabel = document.getElementById("gravityLabel");
+   const jumpSlider = document.getElementById("jumpSlider");
+   const jumpLabel = document.getElementById("jumpLabel");
+   const speedSlider = document.getElementById("speedSlider");
+
+       const speedLabel = document.getElementById("speedLabel");
+    
+       // Character properties
+       let positionX = 50;
+       let positionY = 0;
+       let velocityX = 0;
+       let velocityY = 0;
+       let gravity = parseFloat(gravitySlider.value);
+       let jumpVelocity = parseFloat(jumpSlider.value);
+       let speed = parseFloat(speedSlider.value);
+    
+
+
+function updateCharacter() {
+   positionX += velocityX;
+   positionY += velocityY;
+
+   velocityY -= gravity;
+
+   if (positionY < 0) {
+       positionY = 0;
+       velocityY = 0;
+   }
+
+   character.style.left = positionX + "px";
+   character.style.bottom = positionY + "px";
+
+   // Check collision with blocks
+   var characterRect = character.getBoundingClientRect();
+   var blocks = document.querySelectorAll(".block");
+   blocks.forEach(function(block) {
+       var blockRect = block.getBoundingClientRect();
+       if (
+           characterRect.bottom >= blockRect.top &&
+           characterRect.bottom <= blockRect.bottom &&
+           characterRect.right >= blockRect.left &&
+           characterRect.left <= blockRect.right
+       ) {
+           // Adjust character's position by the difference between its bottom and block's top
+           positionY += characterRect.bottom - blockRect.top;
+           velocityY = 0;
+       }
+   });
+
+   // Check collision with enemy
+    // Check collision with enemy
+var enemies = document.querySelectorAll(".enemy");
+enemies.forEach(function(enemy) {
+var enemyRect = enemy.getBoundingClientRect();
+if (
+   // Check if character bottom is within enemy height
+   characterRect.bottom >= enemyRect.top &&
+   characterRect.bottom <= enemyRect.bottom &&
+   // Check if character right is greater than enemy left and less than enemy right
+   characterRect.right >= enemyRect.left &&
+   characterRect.left <= enemyRect.right
+) {
+   // Check if character hits the side of the enemy
+   if (
+       (characterRect.left <= enemyRect.left && velocityX > 0) || // character hits enemy from the left
+       (characterRect.right >= enemyRect.right && velocityX < 0) // character hits enemy from the right
+   ) {
+       // Reset the page
+       location.reload();
+   } else {
+       // "Kill" enemy if character jumps on it
+       positionY += characterRect.bottom - enemyRect.top;
+       velocityY = jumpVelocity;
+       enemy.style.display = "none";
+   }
+}
+});
+var spike = document.querySelectorAll(".spike");
+spike.forEach(function(spike) {
+var spikeRect = spike.getBoundingClientRect();
+if (
+   // Check if character bottom is within enemy height
+   characterRect.bottom >= spikeRect.top &&
+   characterRect.bottom <= spikeRect.bottom &&
+   // Check if character right is greater than enemy left and less than enemy right
+   characterRect.right >= spikeRect.left &&
+   characterRect.left <= spikeRect.right
+) {
+   // Check if character hits the side of the enemy
+   if (
+       (characterRect.left <= spikeRect.left && velocityX > 0) || // character hits enemy from the left
+       (characterRect.right >= spikeRect.right && velocityX < 0) // character hits enemy from the right
+   ) {
+       // Reset the page
+       location.reload();
+   }
+}
+});
+const endRect = end.getBoundingClientRect();
+          if (
+              characterRect.right > endRect.left &&
+              characterRect.left < endRect.right &&
+              characterRect.bottom > endRect.top &&
+              characterRect.top < endRect.bottom
+          ) {
+              location.href = "https://willthewised.github.io/MarioGame/lvlbasic_dev.html";
+          }
+
+          requestAnimationFrame(updateGame);
+
+
+
+}
+
+document.addEventListener("keydown", function(event) {
+    switch (event.key) {
+        case "a":
+            velocityX = -speed;
+            break;
+        case "d":
+            velocityX = speed;
+            break;
+        case "w":
+            // Allow jumping when the character is on the ground or a block
+            if (positionY === 0 || isOnBlock()) {
+                velocityY = jumpVelocity;
+            }
+            break;
+    }
+});
+
+// Helper function to check if the character is on a block
+function isOnBlock() {
+    const characterRect = character.getBoundingClientRect();
+    const blocks = document.querySelectorAll(".block");
+    for (const block of blocks) {
+        const blockRect = block.getBoundingClientRect();
+        if (
+            characterRect.bottom >= blockRect.top &&
+            characterRect.bottom <= blockRect.bottom + 5 && // Small tolerance for collision
+            characterRect.right >= blockRect.left &&
+            characterRect.left <= blockRect.right
+        ) {
+            return true; // Character is on a block
+        }
+    }
+    return false; // Character is not on any block
+}
+
+ document.addEventListener("keyup", function(event) {
+     if (event.key === "a" || event.key === "d") {
+         velocityX = 0;
+     }
+ });
+
+ gravitySlider.addEventListener("input", function() {
+     gravity = parseFloat(this.value);
+     gravityLabel.textContent = gravity.toFixed(2);
+ });
+
+ jumpSlider.addEventListener("input", function() {
+     jumpVelocity = parseFloat(this.value);
+     jumpLabel.textContent = jumpVelocity.toFixed(0);
+ });
+
+ speedSlider.addEventListener("input", function() {
+     speed = parseFloat(this.value);
+     speedLabel.textContent = speed.toFixed(0);
+ });
+
+ setInterval(updateCharacter, 20);
+</script>
+
+</body>
+</html>
+
+
+
+
+
